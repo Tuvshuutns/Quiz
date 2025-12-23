@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+button {
+  cursor: pointer;
+}
 
 @custom-variant dark (&:is(.dark *));
 

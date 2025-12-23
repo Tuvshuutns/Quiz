@@ -43,10 +43,52 @@ export const POST = async (request: Request) => {
 
 export const GET = async (request: Request) => {
   try {
-    const articles = await prisma.article.findMany();
-    return new Response(JSON.stringify({ articles }), { status: 200 });
+    const articles = await prisma.article.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return new Response(JSON.stringify({ articles }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (err) {
-    console.log(err);
-    return new Response("Failed to fetch all articles", { status: 500 });
+    console.error(err);
+    return new Response(
+      JSON.stringify({ error: "Failed to fetch all articles" }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+};
+
+export const DELETE = async (request: Request) => {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return new Response(JSON.stringify({ error: "Article ID is required" }), {
+        status: 400,
+      });
+    }
+
+    await prisma.quiz.deleteMany({
+      where: { articleId: id },
+    });
+
+    await prisma.article.delete({
+      where: { id },
+    });
+
+    return new Response(
+      JSON.stringify({ message: "Article deleted successfully" }),
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error(err);
+    return new Response(JSON.stringify({ error: "Failed to delete article" }), {
+      status: 500,
+    });
   }
 };

@@ -32,6 +32,7 @@ export const ArticleContent: FC<ArticleContentProps> = ({
         className="border rounded-md min-h-40 p-3"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        required
       />
     </div>
   );

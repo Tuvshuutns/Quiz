@@ -1,12 +1,8 @@
-import prisma from "@/lib/prisma";
+import { Navigation } from "../../_feature/navigation";
+import { SideBar } from "../../_feature/sideBar";
 import { Content } from "./_feature/content";
-import { Navigation } from "./_feature/navigation";
-import { SideBar } from "./_feature/sideBar";
 
 export default async function Home() {
-  const users = await prisma.user.findMany();
-  console.log(users, "Hereglegch");
-
   return (
     <div className="flex flex-col max-h-screen bg-white w-full relative">
       <Navigation />
