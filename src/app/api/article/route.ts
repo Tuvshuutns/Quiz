@@ -13,7 +13,6 @@ export const POST = async (request: Request) => {
         JSON.stringify({ error: "Title, content, and userId are required" }),
         { status: 400 }
       );
-    } else {
     }
     const res = await model.generateContent({
       contents: [

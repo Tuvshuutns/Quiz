@@ -7,14 +7,14 @@ import { BookIcon } from "../_icons/book";
 
 interface ArticleContentProps {
   content: string;
+  summary: string;
   setContent: (value: string) => void;
-  hasSummary: boolean;
 }
 
 export const ArticleContent: FC<ArticleContentProps> = ({
   content,
+  summary,
   setContent,
-  hasSummary,
 }) => {
   return (
     <div className="grid gap-2">
@@ -23,16 +23,20 @@ export const ArticleContent: FC<ArticleContentProps> = ({
           htmlFor="text"
           className="flex items-center font-semibold text-sm text-[#71717A]"
         >
-          {hasSummary ? <BookIcon /> : <FileIcon />}
-          {hasSummary ? "Summary Content" : "Article Content"}
+          {summary ? <BookIcon /> : <FileIcon />}
+          {summary ? "Summary Content" : "Article Content"}
         </Label>
       </div>
       <textarea
         placeholder="Paste your article content here..."
         className="border rounded-md min-h-40 p-3"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
+        value={summary ? summary : content}
+        onChange={(e) => {
+          if (!summary) {
+            setContent(e.target.value);
+          }
+        }}
+        disabled={!!summary}
       />
     </div>
   );

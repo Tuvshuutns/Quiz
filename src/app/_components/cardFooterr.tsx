@@ -7,21 +7,18 @@ import { FC } from "react";
 import { OpenContent } from "./openContent";
 
 interface ArticleContentProps {
-  hasSummary: boolean;
+  summary: string;
   laoding: boolean;
 }
 
-export const CardFooterr: FC<ArticleContentProps> = ({
-  hasSummary,
-  laoding,
-}) => {
+export const CardFooterr: FC<ArticleContentProps> = ({ summary, laoding }) => {
   const router = useRouter();
   return (
     <CardFooter
-      className={`flex px-0 ${hasSummary ? "justify-between" : "justify-end"}`}
+      className={`flex px-0 ${summary ? "justify-between" : "justify-end"}`}
     >
-      {hasSummary && <OpenContent />}
-      {!hasSummary && (
+      {summary && <OpenContent />}
+      {!summary && (
         <Button
           type="submit"
           className="w-45 bg-black/20 mt-5"
@@ -30,7 +27,7 @@ export const CardFooterr: FC<ArticleContentProps> = ({
           {!laoding ? "Generate summary" : "Generating..."}
         </Button>
       )}
-      {hasSummary && (
+      {summary && (
         <button
           className="w-30 h-9 rounded-md text-[14px] bg-black/50 text-white mt-5 hover:bg-black cursor-pointer"
           type="button"

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { CreatUser } from "./_components/userCreate";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <SidebarProvider defaultOpen={false}>{children}</SidebarProvider>
+          <SidebarProvider defaultOpen={false}>
+            <CreatUser />
+            {children}
+          </SidebarProvider>
         </body>
       </html>
     </ClerkProvider>

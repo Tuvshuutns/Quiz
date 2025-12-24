@@ -18,7 +18,7 @@ import { ArticleProvider } from "../_context/articleContext";
 export const Content = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  const [hasSummary, setHasSummary] = useState(false);
+  const [summary, setSummary] = useState("");
   const { user } = useUser();
   const [laoding, setLaoding] = useState(false);
 
@@ -47,8 +47,7 @@ export const Content = () => {
       console.log("GEnerated article", data);
 
       if (data.article.summary) {
-        setContent(data.article.summary);
-        setHasSummary(true);
+        setSummary(data.article.summary);
       }
     } catch (err) {
       console.log(err);
@@ -59,13 +58,13 @@ export const Content = () => {
   const handleReset = () => {
     setContent("");
     setTitle("");
-    setHasSummary(false);
+    setSummary("");
   };
   return (
     <ArticleProvider title={title} content={content}>
       <div className="flex w-full justify-center items-center h-full">
         <div className="flex flex-col gap-10">
-          {hasSummary && (
+          {summary && (
             <button
               className="border w-12 h-10 flex justify-center items-center rounded-sm"
               onClick={handleReset}
@@ -79,7 +78,7 @@ export const Content = () => {
                 <StarIcon />
                 Article Quiz Generator
               </CardTitle>
-              {!hasSummary && (
+              {!summary && (
                 <CardDescription>
                   Paste your article below to generate a summarize and quiz
                   question. Your articles will saved in the sidebar for future
@@ -90,16 +89,16 @@ export const Content = () => {
             <CardContent>
               <form onSubmit={handleSummary}>
                 <div className="flex flex-col gap-6">
-                  {!hasSummary && (
+                  {!summary && (
                     <ArticleTitle title={title} setTitle={setTitle} />
                   )}
                   <ArticleContent
                     content={content}
+                    summary={summary}
                     setContent={setContent}
-                    hasSummary={hasSummary}
                   />
                 </div>
-                <CardFooterr hasSummary={hasSummary} laoding={laoding} />
+                <CardFooterr summary={summary} laoding={laoding} />
               </form>
             </CardContent>
           </Card>
