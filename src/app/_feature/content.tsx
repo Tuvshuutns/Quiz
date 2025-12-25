@@ -19,11 +19,12 @@ export const Content = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
+  const [articleId, setArticleId] = useState("");
   const { user } = useUser();
-  const [laoding, setLaoding] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSummary = async (event: FormEvent<HTMLFormElement>) => {
-    setLaoding(true);
+    setLoading(true);
     event.preventDefault();
     const words = content.trim().split(/\s+/);
     const autoTitle =
@@ -45,14 +46,14 @@ export const Content = () => {
       });
       const data = await res.json();
       console.log("GEnerated article", data);
-
+      setArticleId(data.article.id);
       if (data.article.summary) {
         setSummary(data.article.summary);
       }
     } catch (err) {
       console.log(err);
     } finally {
-      setLaoding(false);
+      setLoading(false);
     }
   };
   const handleReset = () => {
@@ -98,7 +99,12 @@ export const Content = () => {
                     setContent={setContent}
                   />
                 </div>
-                <CardFooterr summary={summary} laoding={laoding} />
+                <CardFooterr
+                  summary={summary}
+                  loading={loading}
+                  articleId={articleId}
+                  setLoading={setLoading}
+                />
               </form>
             </CardContent>
           </Card>

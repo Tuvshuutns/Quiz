@@ -214,19 +214,19 @@ export type QuizOrderByWithRelationInput = {
 
 export type QuizWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  articleId?: string
   AND?: Prisma.QuizWhereInput | Prisma.QuizWhereInput[]
   OR?: Prisma.QuizWhereInput[]
   NOT?: Prisma.QuizWhereInput | Prisma.QuizWhereInput[]
   question?: Prisma.StringFilter<"Quiz"> | string
   options?: Prisma.StringNullableListFilter<"Quiz">
   answer?: Prisma.StringFilter<"Quiz"> | string
+  articleId?: Prisma.StringFilter<"Quiz"> | string
   createdAt?: Prisma.DateTimeFilter<"Quiz"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quiz"> | Date | string
   article?: Prisma.XOR<Prisma.ArticleScalarRelationFilter, Prisma.ArticleWhereInput>
   userScores?: Prisma.UserScoresListRelationFilter
   quizAttempts?: Prisma.QuizAttemptsListRelationFilter
-}, "id" | "id" | "articleId">
+}, "id" | "id">
 
 export type QuizOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

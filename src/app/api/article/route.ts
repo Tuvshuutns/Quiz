@@ -26,10 +26,15 @@ export const POST = async (request: Request) => {
         },
       ],
     });
+
+    const user = await prisma.user.findFirst({
+      where: { clerkId: userId },
+    });
+
     const response = res.response;
     const summary = response.text() || "";
     const article = await prisma.article.create({
-      data: { title, content, summary, userId },
+      data: { title, content, summary, userId: user?.id || "" },
     });
     return new Response(JSON.stringify({ article }), { status: 201 });
   } catch (err) {

@@ -104,7 +104,9 @@ export function Content() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-35">Take a quiz</Button>
+            <Button className="w-35" onClick={() => router.push(`/takeQuiz/${id}`)}>
+              Take a quiz
+            </Button>
           </CardFooter>
         </Card>
       </div>
