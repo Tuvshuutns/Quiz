@@ -47,7 +47,29 @@ export const POST = async (request: Request) => {
 
 export const GET = async (request: Request) => {
   try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+       return new Response(JSON.stringify({ articles: [] }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { clerkId: userId },
+    });
+
+    if (!user) {
+      return new Response(JSON.stringify({ articles: [] }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const articles = await prisma.article.findMany({
+      where: { userId: user.id },
       orderBy: { createdAt: "desc" },
     });
     return new Response(JSON.stringify({ articles }), {

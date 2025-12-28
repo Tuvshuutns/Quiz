@@ -24,15 +24,22 @@ interface Article {
   updatedAt: string | Date;
 }
 
+import { useUser } from "@clerk/nextjs";
+
+// ... (existing imports)
+
 export function AppSidebar() {
+  const { user } = useUser();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!user?.id) return;
+
     async function fetchArticles() {
       setLoading(true);
       try {
-        const res = await fetch("/api/article");
+        const res = await fetch(`/api/article?userId=${user?.id}`);
         if (!res.ok) {
           console.error("Failed to fetch articles:", res.statusText);
           return;
