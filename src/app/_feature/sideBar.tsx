@@ -82,6 +82,7 @@ export function AppSidebar() {
       console.error("❌ Fetch failed:", err);
     }
   };
+  console.log(articles, "articles", user?.id,"user");
 
   return (
     <div className="flex h-full">
